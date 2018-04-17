@@ -69,7 +69,7 @@
 
 		methods:{
 			getProducts(page = 1){
-				axios.get('list_products_test?page='+page).then( response => {
+				axios.get('api_list_products?page='+page).then( response => {
 					console.log(response);
 					this.products = response.data.data;
 					this.pageCount = response.data.last_page;

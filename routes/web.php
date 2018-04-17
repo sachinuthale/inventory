@@ -39,5 +39,5 @@ Route::group(['middleware' => ['auth']], function () {
     Route::view('product/add_product', 'pages.addProduct')->name('addProduct');
     Route::post('product/store_product', 'ProductController@store')->name('storeProduct');
     Route::get('product/list_products', 'ProductController@show')->name('listProducts');
-    Route::get('product/list_products_test', 'ProductController@index')->name('listProducts_test');
+    Route::get('product/api_list_products', 'ProductController@index')->name('apiListProducts');
 });
