@@ -19,8 +19,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue'))
 Vue.component('list-products', require('./components/ListProducts.vue'));
 Vue.component('issue-products-form', require('./components/IssueProductsForm.vue'));
 Vue.component('paginate', require('vuejs-paginate'));
-Vue.component('autocomplete', require('vue2-autocomplete-js'));
-
 
 const app = new Vue({
     el: '#app'
