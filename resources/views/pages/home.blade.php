@@ -1,4 +1,5 @@
 @extends('layouts.default')
+@section('title', 'k-Yantra')
 @section('content')
     <div class="container">
         <div class="row">

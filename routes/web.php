@@ -10,11 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use Illuminate\Support\Facades\Input;
+use App\Models\Product;
 
 /*Route::get('/', function () {
     return view('welcome');
 });*/
-
 Route::get('/', function(){
     return View::make('pages.home');
 })->name('home');
@@ -35,9 +36,18 @@ Route::post('loginUser', 'LabAuth\LoginController@checkUser')->name('loginUser')
 
 //Route after login
 Route::group(['middleware' => ['auth']], function () {
-    //show add product page
+    //show add/list product
     Route::view('product/add_product', 'pages.addProduct')->name('addProduct');
     Route::post('product/store_product', 'ProductController@store')->name('storeProduct');
     Route::get('product/list_products', 'ProductController@show')->name('listProducts');
     Route::get('product/api_list_products', 'ProductController@index')->name('apiListProducts');
+
+    //issue/return products
+    Route::view('product/issue_products_show', 'pages.issueProducts')->name('issueProductsShow');
+
+    Route::get('product/search',function(){
+         $query = Input::get('query');
+         $users = Product::where('name','like','%'.$query.'%')->get();
+         return response()->json($users);
+    });
 });

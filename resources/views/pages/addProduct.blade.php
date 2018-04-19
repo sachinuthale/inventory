@@ -1,4 +1,5 @@
 @extends('layouts.sidebar')
+@section('title', 'Add Products')
 @section('content')
 	<div class="row">
 		<div class="col-md-9 offset-md-1">
@@ -21,7 +22,7 @@
 					@if($errors->has('inputName'))
 					<div class="text-danger">
 						{!! $errors->first('inputName')!!}
-					</div>	
+					</div>
 					@endif
 				</div>
 				<div class="form-group">
@@ -30,7 +31,7 @@
 					@if($errors->has('inputQuantity'))
 					<div class="text-danger">
 						{!! $errors->first('inputQuantity')!!}
-					</div>	
+					</div>
 					@endif
 				</div>
 				<div class="form-group">
@@ -39,7 +40,7 @@
 					@if($errors->has('inputCompany'))
 					<div class="text-danger">
 						{!! $errors->first('inputCompany')!!}
-					</div>	
+					</div>
 					@endif
 				</div>
 				<div class="form-group">
@@ -52,7 +53,7 @@
 					@if($errors->has('inputType'))
 					<div class="text-danger">
 						{!! $errors->first('inputType')!!}
-					</div>	
+					</div>
 					@endif
 				</div>
 				<div class="form-group">
@@ -61,7 +62,7 @@
 					@if($errors->has('inputPrice'))
 					<div class="text-danger">
 						{!! $errors->first('inputPrice')!!}
-					</div>	
+					</div>
 					@endif
 				</div>
 				<div class="form-group">
@@ -70,7 +71,7 @@
 					@if($errors->has('inputLabel'))
 					<div class="text-danger">
 						{!! $errors->first('inputLabel')!!}
-					</div>	
+					</div>
 					@endif
 				</div>
 				<div class="form-group">
@@ -79,7 +80,7 @@
 					@if($errors->has('inputPurchaseDate'))
 					<div class="text-danger">
 						{!! $errors->first('inputPurchaseDate')!!}
-					</div>	
+					</div>
 					@endif
 				</div>
 				<div class="form-group">
@@ -88,7 +89,7 @@
 					@if($errors->has('inputDescription'))
 					<div class="text-danger">
 						{!! $errors->first('inputDescription')!!}
-					</div>	
+					</div>
 					@endif
 				</div>
 				<button type="submit" class="btn btn-primary">Submit</button>

@@ -8,8 +8,7 @@
   </a>
   <div class="collapse" id="menu1" data-parent="#sidebar">
     <a href="{{ route('addProduct') }}" class="list-group-item">Add Products </a>
-    <a href="{{ route('listProducts') }}" class="list-group-item">List Products </a>
-    <a href="#" class="list-group-item">Update Products </a>
+    <a href="{{ route('listProducts') }}" class="list-group-item">Update Products </a>
   </div>
 
   <!-- Issue/Return Hardware -->
@@ -17,7 +16,7 @@
     <i class="fa fa-random"></i> <span class="d-none d-md-inline">Issue/Return</span>
   </a>
   <div class="collapse" id="menu2" data-parent="#sidebar">
-    <a href="#" class="list-group-item">Issue Products </a>
+    <a href="{{ route('issueProductsShow') }}" class="list-group-item">Issue Products </a>
     <a href="#" class="list-group-item">Return Products </a>
   </div>
 

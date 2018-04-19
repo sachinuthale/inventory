@@ -6,7 +6,7 @@
 <body>
     <div id="app">
         @if(Auth::user())
-            @include('includes.header_profile')
+            @include('includes.header')
         @else
         <header>
             @include('includes.header')

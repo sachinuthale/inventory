@@ -1,10 +1,10 @@
 @extends('layouts.sidebar')
-@section('title', 'List Products')
+@section('title', 'Issue Products')
 @section('content')
 	<div class="row">
 		<div class="col-md-9 offset-md-1">
 			<div class="page-header">
-				<h1>List of Products Detail</h1>
+				<h1>Issue Product:</h1>
 			</div>
 			<div>
             	@if (session('error'))
@@ -14,7 +14,7 @@
           			<div class="alert alert-success">{!!session('success')!!}</div>
             	@endif
             </div>
-			<list-products></list-products>
+			<issue-products-form></issue-products-form>
       	</div>
 	</div>
 @stop

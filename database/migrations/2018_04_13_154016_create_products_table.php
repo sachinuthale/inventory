@@ -17,11 +17,12 @@ class CreateProductsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('quantity');
+            $table->integer('avl_quantity');
             $table->string('company');
             $table->integer('type');
             $table->double('price', 8, 2);
             $table->string('label');
-            $table->date('purchase_date');            
+            $table->date('purchase_date');
             $table->mediumText('description');
             $table->timestamps();
         });
