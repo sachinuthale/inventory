@@ -47673,13 +47673,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
 		return {
 			query: '',
 			results: [],
-			isOpen: false
+			isOpen: false,
+			arrowCounter: 0
 		};
 	},
 
@@ -47699,6 +47702,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			console.log(result.name);
 			this.query = result.name;
 			this.isOpen = false;
+		},
+		onArrowDown: function onArrowDown(evt) {
+			console.log(this.arrowCounter);
+			console.log(this.results.length);
+			if (this.arrowCounter < this.results.length) {
+				this.arrowCounter = this.arrowCounter + 1;
+			}
+		},
+		onArrowUp: function onArrowUp() {
+			if (this.arrowCounter > 0) {
+				this.arrowCounter = this.arrowCounter - 1;
+			}
+		},
+		onEnter: function onEnter() {
+			this.query = this.results[this.arrowCounter].name;
+			this.isOpen = false;
+			this.arrowCounter = -1;
 		}
 	}
 });
@@ -47722,11 +47742,7 @@ var render = function() {
         }
       ],
       staticClass: "form-control",
-      attrs: {
-        type: "text",
-        placeholder: "what are you looking for?",
-        id: "input"
-      },
+      attrs: { type: "text", placeholder: "what are you looking for?" },
       domProps: { value: _vm.query },
       on: {
         input: [
@@ -47737,6 +47753,38 @@ var render = function() {
             _vm.query = $event.target.value
           },
           _vm.autoComplete
+        ],
+        keyup: [
+          function($event) {
+            if (
+              !("button" in $event) &&
+              _vm._k($event.keyCode, "down", 40, $event.key, [
+                "Down",
+                "ArrowDown"
+              ])
+            ) {
+              return null
+            }
+            return _vm.onArrowDown($event)
+          },
+          function($event) {
+            if (
+              !("button" in $event) &&
+              _vm._k($event.keyCode, "up", 38, $event.key, ["Up", "ArrowUp"])
+            ) {
+              return null
+            }
+            return _vm.onArrowUp($event)
+          },
+          function($event) {
+            if (
+              !("button" in $event) &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
+            }
+            return _vm.onEnter($event)
+          }
         ]
       }
     }),
@@ -47768,7 +47816,7 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("\n\t\t\t" + _vm._s(result.name) + "\n\t\t\t")]
+                [_vm._v("\n\t\t\t\t" + _vm._s(result.name) + "\n\t\t\t\t")]
               )
             })
           )
