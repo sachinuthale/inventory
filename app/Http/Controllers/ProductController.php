@@ -114,4 +114,17 @@ class ProductController extends Controller
     {
         //
     }
+
+    /**
+     * Return the product list for autosuggestion
+     *
+     * @param  searchQuery
+     * @return JSON Response
+     */
+    public function searchProducts(Request $request)
+    {
+        $query = $request->input('query');
+        $data = Product::where('name','like','%'.$query.'%')->get(['id','name','avl_quantity']);
+        return response()->json($data);
+    }
 }

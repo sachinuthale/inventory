@@ -19,11 +19,3 @@ use App\Models\Product;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-
-Route::get('searchProducts/{query}', 'Api/ProductController@getProducts');
-
-Route::get('search',function(){
-     $query = Input::get('query');
-     $users = Product::where('name','like','%'.$query.'%')->get();
-     return response()->json($users);
-});

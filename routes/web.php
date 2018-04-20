@@ -10,8 +10,6 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-use Illuminate\Support\Facades\Input;
-use App\Models\Product;
 
 /*Route::get('/', function () {
     return view('welcome');
@@ -44,10 +42,6 @@ Route::group(['middleware' => ['auth']], function () {
 
     //issue/return products
     Route::view('product/issue_products_show', 'pages.issueProducts')->name('issueProductsShow');
-
-    Route::get('product/search',function(){
-         $query = Input::get('query');
-         $users = Product::where('name','like','%'.$query.'%')->get();
-         return response()->json($users);
-    });
+    Route::get('product/search', 'ProductController@searchProducts')->name('searchProduct');
+    Route::get('product/issue_product', 'ProductController@issueProducts')->name('issueProduct');
 });

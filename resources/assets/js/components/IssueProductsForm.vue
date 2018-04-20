@@ -1,71 +1,50 @@
 <template>
 	<div>
-		<input
-			type="text"
-			placeholder="what are you looking for?"
-			v-model="query"
-			@input="autoComplete"
-			class="form-control"
-			@keyup.down="onArrowDown"
-			@keyup.up="onArrowUp"
-      		@keyup.enter="onEnter"
-		>
-		<div class="panel-footer" v-if="results.length">
-			<ul class="list-group" v-show="isOpen">
-				<li class="list-group-item" 
-					v-for="(result, i) in results" 
-					@click="setResult(result)" 
-					:key="i"					
-				>
-				{{ result.name }}
-				</li>
-			</ul>
-		</div>
+		<form class="form-horizontal" method="post" @submit.prevent="onSubmit">
+			<list-products-field v-bind:value="search"></list-products-field>
+			<div class="form-group">
+				<div class="col-md-12 mt-2 text-left">
+				<button type="submit" class="btn btn-primary btn-lg">Submit</button>
+			</div>
+			</div>
+		</form>
 	</div>
 </template>
 
 <script>
+import ListProductsField from './ListProductsField.vue';
 export default{
+	components:{
+      ListProductsField
+    },
+	props: ['action', 'method', 'formData', 'search'],
 	data(){
-		return {
-			query: '',
-			results: [],
-			isOpen: false,
-			arrowCounter: 0,
-		}
-	},
-	methods: {
-		autoComplete(){
-			this.isOpen = true;
-			this.results = [];
-			if(this.query.length > 2){
-				axios.get('search',{params: {query: this.query}}).then(response => {
-				this.results = response.data;
-			});
-			}
-		},
-		setResult(result) {
-			console.log(result.name)
-	        this.query = result.name;
-	        this.isOpen = false;
+       return {
+       		errors: [],
+       		product: {
+		       inputName: ListProductsField.test,
+		    },
+            saved: false,
+       };
+    },
+    methods: {
+	    onSubmit() {
+	        this.saved = false;
+	        console.log(this.inputName);
+	        axios.post('issue_product', this.product)
+	            .then(({data}) => this.setSuccessMessage())
+	            .catch(({response}) => this.setErrors(response));
 	    },
-	    onArrowDown(evt) {
-	    	console.log(this.arrowCounter);
-	    	console.log(this.results.length);
-	        if (this.arrowCounter < this.results.length) {
-	          this.arrowCounter = this.arrowCounter + 1;
-	        }
+
+	    setErrors(response) {
+	        this.errors = response.data.errors;
 	    },
-	    onArrowUp() {
-	        if (this.arrowCounter > 0) {
-	          this.arrowCounter = this.arrowCounter -1;
-	        }
-	      },
-	      onEnter() {
-	        this.query = this.results[this.arrowCounter].name;
-	        this.isOpen = false;
-	        this.arrowCounter = -1;
-	      },
+
+	    setSuccessMessage() {
+	        this.reset();
+	        this.saved = true;
+	    },
 	}
 }
 </script>
+

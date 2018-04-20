@@ -14,7 +14,7 @@
           			<div class="alert alert-success">{!!session('success')!!}</div>
             	@endif
             </div>
-			<list-products></list-products>
+			<list-products-page></list-products-page>
       	</div>
 	</div>
 @stop
