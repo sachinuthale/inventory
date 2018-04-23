@@ -1,7 +1,11 @@
 <template>
 	<div>
 		<form class="form-horizontal" method="post" @submit.prevent="onSubmit">
-			<list-products-field v-bind:value="search"></list-products-field>
+			<list-products-field></list-products-field>
+			<div>
+			  <p>Parent value: {{parentValue}}</p>
+			  <child v-model="parentValue"></child>
+			</div>
 			<div class="form-group">
 				<div class="col-md-12 mt-2 text-left">
 				<button type="submit" class="btn btn-primary btn-lg">Submit</button>
@@ -25,6 +29,8 @@ export default{
 		       inputName: ListProductsField.test,
 		    },
             saved: false,
+            parentValue:'',
+                        
        };
     },
     methods: {

@@ -20,6 +20,7 @@ Vue.component('list-products-page', require('./components/ListProductsPage.vue')
 Vue.component('list-products-field', require('./components/ListProductsField.vue'));
 Vue.component('issue-products-form', require('./components/IssueProductsForm.vue'));
 Vue.component('paginate', require('vuejs-paginate'));
+Vue.component('child', require('./components/Test.vue'));
 
 const app = new Vue({
     el: '#app'
