@@ -3,14 +3,12 @@
     <label for="inputName">Name</label>
     <input
       type="text"
-      class="form-control"
+      class="form-control"      
       @input="onChange"
       v-model="search"
       @keyup.down="onArrowDown"
       @keyup.up="onArrowUp"
       @keyup.enter="onEnter"
-      id="inputName"
-      name="inputName"
       placeholder="Which product you want to issue ?"
       autocomplete="off"
     />
@@ -44,15 +42,14 @@
     name: 'list-products-field',
 
     props: {
-      items: {
-        type: Array,
-        required: false,
-        default: () => [],
-      },
       isAsync: {
         type: Boolean,
         required: false,
         default: false,
+      },
+      value: {
+        type: String,
+        required: true
       },
     },
 
@@ -63,7 +60,6 @@
         search: '',
         isLoading: false,
         arrowCounter: 0,
-        test:"Sachn",
       };
     },
 
@@ -91,6 +87,7 @@
       setResult(result) {
         this.search = result.name;
         this.isOpen = false;
+        this.$emit('input', this.search);
       },
       onArrowDown(evt) {
         if (this.arrowCounter < this.results.length) {
@@ -106,6 +103,7 @@
         this.search = this.results[this.arrowCounter].name;
         this.isOpen = false;
         this.arrowCounter = -1;
+        this.$emit('input', this.search);
       },
       handleClickOutside(evt) {
         if (!this.$el.contains(evt.target)) {
@@ -113,15 +111,6 @@
           this.arrowCounter = -1;
         }
       }
-    },
-    watch: {
-      items: function (val, oldValue) {
-        // actually compare them
-        if (val.length !== oldValue.length) {
-          this.results = val;
-          this.isLoading = false;
-        }
-      },
     },
     mounted() {
       document.addEventListener('click', this.handleClickOutside)
