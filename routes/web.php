@@ -43,5 +43,10 @@ Route::group(['middleware' => ['auth']], function () {
     //issue/return products
     Route::view('product/issue_products_show', 'pages.issueProducts')->name('issueProductsShow');
     Route::get('product/search', 'ProductController@searchProducts')->name('searchProduct');
-    Route::get('product/issue_product', 'ProductController@issueProducts')->name('issueProduct');
+    Route::post('product/issue_product', 'ProductController@issueProducts')->name('issueProduct');
+
+    //Consumer operation
+    Route::view('consumer/add_consumer', 'pages.addConsumer')->name('addConsumer');
+    Route::post('consumer/store_consumer', 'ConsumerController@store')->name('storeConsumer');
+    Route::get('product/searchConsumer','ConsumerController@searchConsumer')->name('searchConsumer');
 });

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use DateTime;
 use App\Models\Product;
+use App\Models\Consumer;
+use App\Models\IssueProduct;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -126,5 +128,38 @@ class ProductController extends Controller
         $query = $request->input('query');
         $data = Product::where('name','like','%'.$query.'%')->get(['id','name','avl_quantity']);
         return response()->json($data);
+    }
+
+    /*
+    * Save the issue product data
+    *
+    *
+    *
+    */
+    public function issueProducts(Request $request)
+    {
+        $validatedData = $request->validate([
+            'inputProductName' => 'required',
+            'inputName' => 'required',
+            'inputContact' => 'required',
+            'inputEmail' => 'required|email',
+            'inputIssueQuantity' => 'required|numeric|digits_between:1,4'            
+        ]);
+
+        $issueProduct = new IssueProduct;
+
+        $issueProduct->productId = $request->inputId;
+        $issueProduct->consumerId = $request->inputConsumerId;
+        $issueProduct->issuedQuantity = $request->inputIssueQuantity;
+        $issueProduct->issued_at = new DateTime();
+        $issueProduct->returned_at = NULL;
+        $issueProduct->returnFlag = 1;
+
+        $issueProduct->save();
+
+        $product = Product::where('id', $request->inputId)->first();
+        Product::where('id', $request->inputId)->update([
+            'avl_quantity' => (($product->avl_quantity)-($request->inputIssueQuantity)),
+        ]);
     }
 }
