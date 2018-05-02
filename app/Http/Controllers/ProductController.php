@@ -175,5 +175,7 @@ class ProductController extends Controller
         Product::where('id', $request->inputId)->update([
             'avl_quantity' => (($product->avl_quantity)-($request->inputIssueQuantity)),
         ]);
+
+        //return response('success', 204);
     }
 }
