@@ -140,7 +140,7 @@ class ProductController extends Controller
     public function searchProducts(Request $request)
     {
         $query = $request->input('query');
-        $data = Product::where('name','like','%'.$query.'%')->get(['id','name','avl_quantity']);
+        $data = Product::where('name','like','%'.$query.'%')->get();
         return response()->json($data);
     }
 
@@ -177,5 +177,32 @@ class ProductController extends Controller
         ]);
 
         //return response('success', 204);
+    }
+
+    /*
+    * Update the quantity of product
+    *
+    *
+    *
+    */
+    public function addQuantity(Request $request){
+        $validatedData = $request->validate([
+            'inputProductName' => 'required',
+            'inputQuantity' => 'required|numeric|digits_between:1,4',
+            'inputPurchaseDate' => 'required|date|date_format:Y/m/d'            
+        ]);
+
+        $productEntry = new ProductEntry;
+        $productEntry->productId = $request->inputId;
+        $productEntry->quantity = $request->inputQuantity;
+        $productEntry->added_date = date("Y-m-d");
+
+        $productEntry->save();
+
+        $product = Product::where('id', $request->inputId)->first();
+        Product::where('id', $request->inputId)->update([
+            'avl_quantity' => (($product->avl_quantity)+($request->inputQuantity)),
+        ]);
+
     }
 }

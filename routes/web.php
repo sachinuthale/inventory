@@ -40,6 +40,10 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('product/list_products', 'ProductController@show')->name('listProducts');
     Route::get('product/api_list_products', 'ProductController@index')->name('apiListProducts');
 
+    //add quantity of product
+    Route::view('product/add_product_quantity', 'pages.addQuantity')->name('addQuantity');
+    Route::post('product/save_product_quantity', 'ProductController@addQuantity')->name('saveQuantity');
+
     //issue/return products
     Route::view('product/issue_products_show', 'pages.issueProducts')->name('issueProductsShow');
     Route::get('product/search', 'ProductController@searchProducts')->name('searchProduct');

@@ -8,7 +8,7 @@
   </a>
   <div class="collapse" id="menu1" data-parent="#sidebar">
     <a href="{{ route('addProduct') }}" class="list-group-item">Add Products </a>
-    <a href="#" class="list-group-item">Add Quantity </a>
+    <a href="{{ route('addQuantity') }}" class="list-group-item">Add Quantity </a>
     <a href="{{ route('listProducts') }}" class="list-group-item">Update Products </a>
   </div>
 

@@ -18,6 +18,7 @@ window.axios = axios;
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 Vue.component('list-products-page', require('./components/ListProductsPage.vue'));
 Vue.component('issue-products-form', require('./components/IssueProductForm.vue'));
+Vue.component('add-product-quantity-form', require('./components/AddQuantityProductForm.vue'));
 Vue.component('paginate', require('vuejs-paginate'));
 
 const app = new Vue({
