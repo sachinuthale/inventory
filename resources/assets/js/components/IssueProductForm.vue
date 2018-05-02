@@ -5,7 +5,7 @@
         <label>Product Name</label>
         <input
           type="text"
-          class="form-control"      
+          class="form-control"
           @input="onChange"
           v-model="product.inputProductName"
           @keyup.down="onArrowDown"
@@ -14,7 +14,7 @@
           placeholder="Which product you want to issue ?"
           autocomplete="off"
         />
-        <span v-if="errors.inputProductName" class="text-danger">{{ errors.inputProductName }}</span>       
+        <span v-if="errors.inputProductName" class="text-danger">{{ errors.inputProductName }}</span>
         <ul
           id="autocomplete-results list-group"
           v-show="isOpen"
@@ -36,26 +36,26 @@
           >
             {{ result.name }}
           </li>
-        </ul>    
+        </ul>
       </div>
       <div class="form-group">
           <label>Quantity avilable for issue:</label>
           <input
           type="text"
-          class="form-control"                
+          class="form-control"
           v-model="product.inputQuantity"
           placeholder="Product Quantity available to issue ?"
           autocomplete="off"
           readonly
-        />        
+        />
       </div>
       <div class="col-xs-12 form-group">
           <label class="control-label">Name</label>
-          <input 
+          <input
             type="text"
             @input="onChangeConsumer"
-            v-model="product.inputName" 
-            class="form-control" 
+            v-model="product.inputName"
+            class="form-control"
             placeholder="Whom you want to issue the product?"
           >
           <span v-if="errors.inputName" class="text-danger">{{ errors.inputName }}</span>
@@ -86,7 +86,7 @@
           <label class="control-label">Contact</label>
           <input type="text" v-model="product.inputContact" class="form-control" placeholder="Please ask for working contact number?" readonly>
           <span v-if="errors.inputContact" class="text-danger">{{ errors.inputContact }}</span>
-      </div>      
+      </div>
       <div class="col-xs-12 form-group">
           <label class="control-label">Email</label>
           <input type="text" v-model="product.inputEmail" class="form-control" placeholder="Ask for email address ?" readonly>
@@ -94,18 +94,18 @@
       </div>
       <div class="col-xs-12 form-group">
           <label class="control-label">Address/Description/Comment</label>
-          <textarea name="inputAddress" v-model="product.inputAddress" class="form-control" rows="3" readonly></textarea>          
-      </div>      
+          <textarea name="inputAddress" v-model="product.inputAddress" class="form-control" rows="3" readonly></textarea>
+      </div>
       <div class="col-xs-12 form-group">
           <label class="control-label">Issue Quantity</label>
           <input type="text" v-model="product.inputIssueQuantity" class="form-control" placeholder="How much product are you isshuing ?">
           <span v-if="errors.inputIssueQuantity" class="text-danger">{{ errors.inputIssueQuantity }}</span>
-      </div>        
+      </div>
       <div class="col-xs-12 form-group">
         <button class="btn btn-success">Issue</button>
       </div>
-    </form>    
-</div>  
+    </form>
+</div>
 </template>
 
 <script>
@@ -144,7 +144,7 @@
           inputEmail: '',
           inputAddress: '',
           inputIssueQuantity: ''
-        },        
+        },
       };
     },
 
@@ -212,14 +212,23 @@
           }else{
             axios.post('issue_product', this.product).then(response => {
                 this.errors = [];
+                this.product.inputId = '',
+                this.product.inputProductName = '',
+                this.product.inputQuantity = '',
+                this.product.inputConsumerId = '',
+                this.product.inputName = '',
+                this.product.inputContact = '',
+                this.product.inputEmail = '',
+                this.product.inputAddress = '',
+                this.product.inputIssueQuantity = '',
                 console.log(response);
             }).catch(error => {
                 this.errors = error.response.data.errors;
-                console.log(error);                 
+                console.log(error);
             });
-          } 
+          }
       },
-      
+
       //get consumer list
       onChangeConsumer() {
         // Let's warn the parent that a change was made
@@ -252,7 +261,7 @@
       },
     },
     mounted() {
-      document.addEventListener('click', this.handleClickOutside)
+      document.addEventListener('click', this.handleClickOutside);
     },
     destroyed() {
       document.removeEventListener('click', this.handleClickOutside)

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use DateTime;
 use App\Models\Product;
+use App\Models\ProductEntry;
 use App\Models\Consumer;
 use App\Models\IssueProduct;
 use Illuminate\Http\Request;
@@ -52,21 +54,33 @@ class ProductController extends Controller
             'inputDescription' => 'required'
         ]);
 
-        $product = new Product;
-        $product->name = $request->inputName;
-        $product->quantity = $request->inputQuantity;
-        $product->avl_quantity = $request->inputQuantity;
-        $product->company = $request->inputCompany;
-        $product->type = $request->inputType;
-        $product->price = $request->inputPrice;
-        $product->label = $request->inputLabel;
-        $product->purchase_date = $request->inputPurchaseDate;
-        $product->description = $request->inputDescription;
-        $product->created_at = new DateTime();
+        DB::transaction(function() use ($request) {
+            $product = new Product;
+            $product->name = $request->inputName;
+            $product->quantity = $request->inputQuantity;
+            $product->avl_quantity = $request->inputQuantity;
+            $product->company = $request->inputCompany;
+            $product->type = $request->inputType;
+            $product->price = $request->inputPrice;
+            $product->label = $request->inputLabel;
+            $product->purchase_date = $request->inputPurchaseDate;
+            $product->description = $request->inputDescription;
+            $product->created_at = new DateTime();
 
-        if(! $product->save()){
-            return redirect()->route('addProduct')->with('error','Product not saved....');
-        }
+            if(! $product->save()){
+                return redirect()->route('addProduct')->with('error','Product not saved....');
+            }
+
+            $productEntry = new ProductEntry;
+            $productEntry->productId = $product->id;
+            $productEntry->quantity = $request->inputQuantity;
+            $productEntry->added_date = date("Y-m-d");
+
+            if(! $productEntry->save()){
+                return redirect()->route('addProduct')->with('error','Product Entry not saved....');
+            }
+        });
+
         return redirect()->route('addProduct')->with('success','Product added successfully....');
     }
 
@@ -143,7 +157,7 @@ class ProductController extends Controller
             'inputName' => 'required',
             'inputContact' => 'required',
             'inputEmail' => 'required|email',
-            'inputIssueQuantity' => 'required|numeric|digits_between:1,4'            
+            'inputIssueQuantity' => 'required|numeric|digits_between:1,4'
         ]);
 
         $issueProduct = new IssueProduct;
