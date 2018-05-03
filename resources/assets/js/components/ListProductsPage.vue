@@ -6,7 +6,7 @@
 			        <th scope="col">#</th>
 			        <th scope="col">Name</th>
 			        <th scope="col">Company</th>
-			        <th scope="col">Quantity</th>
+			        <th scope="col">Available Quantity</th>
 			        <th scope="col">Unit Price</th>
 			        <th scope="col">Label</th>
 			        <th scope="col">Purchase Date</th>
@@ -17,7 +17,7 @@
 			        <th scope="row">{{index+1}}</th>
 			        <td>{{ product.name }}</td>
 			        <td>{{ product.company}}</td>
-			        <td>{{ product.quantity}}</td>
+			        <td>{{ product.avl_quantity}}</td>
 			        <td>{{ product.price}}</td>
 			        <td>{{ product.label}}</td>
 			        <td>{{ product.purchase_date}}</td>

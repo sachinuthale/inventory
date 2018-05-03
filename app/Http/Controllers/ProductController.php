@@ -57,7 +57,6 @@ class ProductController extends Controller
         DB::transaction(function() use ($request) {
             $product = new Product;
             $product->name = $request->inputName;
-            $product->quantity = $request->inputQuantity;
             $product->avl_quantity = $request->inputQuantity;
             $product->company = $request->inputCompany;
             $product->type = $request->inputType;
@@ -189,7 +188,7 @@ class ProductController extends Controller
         $validatedData = $request->validate([
             'inputProductName' => 'required',
             'inputQuantity' => 'required|numeric|digits_between:1,4',
-            'inputPurchaseDate' => 'required|date|date_format:Y/m/d'            
+            'inputPurchaseDate' => 'required|date|date_format:Y/m/d'
         ]);
 
         $productEntry = new ProductEntry;
@@ -203,6 +202,8 @@ class ProductController extends Controller
         Product::where('id', $request->inputId)->update([
             'avl_quantity' => (($product->avl_quantity)+($request->inputQuantity)),
         ]);
+
+
 
     }
 }

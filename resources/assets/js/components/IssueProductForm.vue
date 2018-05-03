@@ -1,5 +1,8 @@
 <template>
 <div>
+    <div class="alert alert-success" v-if="issued">
+        <strong>Success!</strong> Product issued successfully.
+    </div>
     <form method="post" @submit.prevent="issueProduct()">
       <div class="form-group">
         <label>Product Name</label>
@@ -134,6 +137,7 @@
         isLoading: false,
         isLoading1: false,
         arrowCounter: 0,
+        issued: false,
         product: {
           inputId: '',
           inputProductName: '',
@@ -151,6 +155,8 @@
     methods: {
       //Get Product list
       onChange() {
+        this.issued = false;
+
         // Let's warn the parent that a change was made
         this.$emit('input', this.product.inputProductName);
 
@@ -207,10 +213,12 @@
       },
 
       issueProduct(){
+          this.issued = false;
           if(this.product.inputQuantity < this.product.inputIssueQuantity ){
             alert("Can't issue the Product");
           }else{
             axios.post('issue_product', this.product).then(response => {
+                this.issued = true;
                 this.errors = [];
                 this.product.inputId = '',
                 this.product.inputProductName = '',

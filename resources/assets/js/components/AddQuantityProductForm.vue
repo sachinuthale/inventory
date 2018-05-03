@@ -1,5 +1,8 @@
 <template>
 <div>
+    <div class="alert alert-success" v-if="saved">
+        <strong>Success!</strong> Added successfully.
+    </div>
     <form method="post" @submit.prevent="addQuantity()">
       <div class="form-group">
         <label>Product Name</label>
@@ -50,9 +53,13 @@
         />
       </div>
       <div class="col-xs-12 form-group">
+          <label class="control-label">Available Quantity</label>
+          <input type="text" v-model="product.inputAvlQuantity" class="form-control" placeholder="Number of Available Quantity" readonly>
+      </div>
+      <div class="col-xs-12 form-group">
           <label class="control-label">Unit Price</label>
-          <input type="text" v-model="product.inputPrice" class="form-control" placeholder="Price of the product is?" readonly>          
-      </div>      
+          <input type="text" v-model="product.inputPrice" class="form-control" placeholder="Price of the product is?" readonly>
+      </div>
       <div class="col-xs-12 form-group">
           <label class="control-label">Description</label>
           <textarea v-model="product.inputDiscription" class="form-control" rows="3" readonly></textarea>
@@ -66,7 +73,7 @@
           <label>Purchase Date</label>
           <input type="text" class="form-control" v-model="product.inputPurchaseDate"  placeholder="When-yyyy/m/d??" >
           <span v-if="errors.inputPurchaseDate" class="text-danger">{{ errors.inputPurchaseDate }}</span>
-      </div>      
+      </div>
       <div class="col-xs-12 form-group">
         <button class="btn btn-success">Add Quantity</button>
       </div>
@@ -97,14 +104,16 @@
         errors: [],
         isLoading: false,
         arrowCounter: 0,
+        saved: false,
         product: {
-          inputId: '',
-          inputProductName: '',
-          inputQuantity: '',
-          inputCompany: '',
-          inputPrice: '',
-          inputDiscription: '',
-          inputPurchaseDate: '',
+          inputId: null,
+          inputProductName: null,
+          inputAvlQuantity: null,
+          inputQuantity: null,
+          inputCompany: null,
+          inputPrice: null,
+          inputDiscription: null,
+          inputPurchaseDate: null,
         },
       };
     },
@@ -112,6 +121,7 @@
     methods: {
       //Get Product list
       onChange() {
+        this.saved = false;
         // Let's warn the parent that a change was made
         this.$emit('input', this.product.inputProductName);
 
@@ -135,6 +145,7 @@
       setResult(result) {
         this.product.inputId = result.id;
         this.product.inputProductName = result.name;
+        this.product.inputAvlQuantity = result.avl_quantity;
         this.product.inputCompany = result.company,
         this.product.inputPrice = result.price,
         this.product.inputDiscription = result.description,
@@ -156,6 +167,7 @@
       onEnter() {
         this.product.inputId = result.id;
         this.product.inputProductName = result.name;
+        this.product.inputAvlQuantity = result.avl_quantity;
         this.product.inputCompany = result.company,
         this.product.inputPrice = result.price,
         this.product.inputDiscription = result.description,
@@ -172,21 +184,24 @@
       },
 
       addQuantity(){
+          this.saved = false;
           axios.post('save_product_quantity', this.product).then(response => {
+                this.saved = true;
                 this.errors = [];
-                this.product.inputId = '',
-                this.product.inputProductName = '',
-                this.product.inputQuantity = '',
-                this.product.inputCompany = '',
-                this.product.inputPrice = '',
-                this.product.inputDiscription = '',
-                this.product.inputPurchaseDate = '',
+                this.product.inputId = null,
+                this.product.inputProductName = null,
+                this.product.inputAvlQuantity = null,
+                this.product.inputQuantity = null,
+                this.product.inputCompany = null,
+                this.product.inputPrice = null,
+                this.product.inputDiscription = null,
+                this.product.inputPurchaseDate = null,
                 console.log(response);
             }).catch(error => {
                 this.errors = error.response.data.errors;
                 console.log(error);
             });
-        },            
+        },
     },
     mounted() {
       document.addEventListener('click', this.handleClickOutside);

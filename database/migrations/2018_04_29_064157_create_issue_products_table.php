@@ -19,7 +19,7 @@ class CreateIssueProductsTable extends Migration
             $table->integer('productId');
             $table->integer('issuedQuantity');
             $table->dateTime('issued_at');
-            $table->dateTime('returned_at');
+            $table->dateTime('returned_at')->nullable();;
             $table->integer('returnFlag');
             $table->timestamps();
         });

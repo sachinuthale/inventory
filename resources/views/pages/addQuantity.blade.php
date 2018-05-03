@@ -4,7 +4,7 @@
 	<div class="row">
 		<div class="col-md-9 offset-md-1">
 			<div class="page-header">
-				<h1>Issue Product:</h1>
+				<h1>Add Quantity Product:</h1>
 			</div>
 			<div>
             	@if (session('error'))
